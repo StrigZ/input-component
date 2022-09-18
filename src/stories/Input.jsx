@@ -1,16 +1,25 @@
 import styled from "styled-components";
+import GetIcon from "./GetIcon";
 const Input = (props) => {
   return (
     <FormControl {...props}>
       {props.helperText && <p className="helper-text">{props.helperText}</p>}
 
-      {props.startIcon && props.startIcon !== "none" && (
-        <span className="material-icons start-icon">{props.startIcon}</span>
-      )}
-      <input value={props.text} tabIndex={0} {...props} />
-      {props.endIcon && props.endIcon !== "none" && (
-        <span className="material-icons end-icon">{props.endIcon}</span>
-      )}
+      <InputContainer>
+        {props.startIcon && props.startIcon !== "none" && (
+          <InputStartIcon className="">
+            <GetIcon name="upload" />
+          </InputStartIcon>
+        )}
+
+        <input value={props.text} tabIndex={0} {...props} />
+
+        {props.endIcon && props.endIcon !== "none" && (
+          <span className="">
+            <GetIcon name="delete" />
+          </span>
+        )}
+      </InputContainer>
 
       <label htmlFor={props.id}>{props.label}</label>
     </FormControl>
@@ -48,16 +57,17 @@ const FormControl = styled.div`
   }
 
   input {
-    /* width: 100%; */
-    border: 0.0625rem solid #828282;
-    border-radius: 0.5rem;
-    padding: 1.125rem;
+    width: 100%;
+    /* border: 0.0625rem solid #828282; */
+    border: none;
+    /* border-radius: 0.5rem; */
+    /* padding: 1.125rem; */
     font-family: "Noto Sans";
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
     line-height: 20px;
-    padding: ${(props) => {
+    /* padding: ${(props) => {
       switch (props.size) {
         case "sm":
           return `.625rem .75rem`;
@@ -67,14 +77,14 @@ const FormControl = styled.div`
         default:
           return `1.125rem .75rem`;
       }
-    }};
+    }}; */
 
     ${(props) => {
       if (props.startIcon && props.startIcon !== "none") {
-        const newPaddingLeft = 1.125 + 1.75;
+        const newPaddingLeft = 1.125;
         return `
           padding-left: ${newPaddingLeft}rem;
-          padding-right: ${newPaddingLeft}rem;
+          
         `;
       }
     }}
@@ -141,32 +151,34 @@ const FormControl = styled.div`
       `;
     }
   }}
-  ${(props) => {
-    if (props.startIcon && props.startIcon !== "none") {
-      return `
-        .start-icon {
-          font-size: 24px;  
-          position: absolute;
-          top: 38px;
-          left: 12px;        
-          color: #828282;
-        }
-      `;
+`;
+
+const InputStartIcon = styled.span``;
+const InputContainer = styled.div`
+  /* width: 100%; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 0.0625rem solid #828282;
+  border-radius: 0.5rem;
+  padding: 1.125rem;
+  padding: ${(props) => {
+    switch (props.size) {
+      case "sm":
+        return `.625rem .75rem`;
+
+      case "md":
+        return `1.125rem .75rem`;
+      default:
+        return `1.125rem .75rem`;
     }
-  }}
-  ${(props) => {
-    if (props.startIcon && props.endIcon !== "none") {
-      return `
-        .end-icon {
-          font-size: 24px;  
-          position: absolute;
-          top: 38px;
-          right: 12px;
-          color: #828282
-        }
-      `;
-    }
-  }}
+  }};
+
+  svg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 export default Input;
